@@ -5,13 +5,23 @@
 #define LIBPRIQUEUE_H_
 
 /**
+ * Data structure that holds the node info in queue
+ */
+typedef struct node {
+  void* data;
+  struct node* nextNode;
+} node;
+
+node* newNode();
+
+/**
   Priqueue Data Structure
 */
-typedef struct _priqueue_t
-{
-
+typedef struct _priqueue_t {
+  int size;
+  node* head;
+  int(*compare)(const void*, const void*);
 } priqueue_t;
-
 
 void   priqueue_init     (priqueue_t *q, int(*comparer)(const void *, const void *));
 
