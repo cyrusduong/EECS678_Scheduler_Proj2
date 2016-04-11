@@ -145,7 +145,7 @@ void *priqueue_at(priqueue_t *q, int index)
 int priqueue_remove(priqueue_t *q, void *ptr)
 {
 	int numRemoved = 0;
-	while (q->head->data == ptr) {
+	while (q->size > 0 && q->head->data == ptr) {
 		node* removeMe = q->head;
 		q->head = q->head->nextNode;
 		free(removeMe);
@@ -153,8 +153,12 @@ int priqueue_remove(priqueue_t *q, void *ptr)
 		numRemoved++;
 	}
 
-	node* prev = q->head;
-	node* traverse = q->head->nextNode;
+	node* prev = NULL;
+	node* traverse = NULL;
+	if (q->head != NULL) {
+		prev = q->head;
+		traverse = q->head->nextNode;
+	}
 
 	while (traverse != NULL) {
 		if (traverse->data == ptr) {
